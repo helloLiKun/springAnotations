@@ -1,13 +1,22 @@
 package com.mvc.cn.entity;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 /**
  * Created by liKun on 2018/1/8 0008.
  */
+@Component("jdbc")
 public class JDBC {
+    @Value("#{prop.ip}")
     String ip;
+    @Value("#{prop.name}")
     String username;
+    @Value("#{prop.password}")
     String password;
+    @Value("#{prop.identify}")
     String identify;
+    @Value("#{prop.max_connect}")
     String maxConnect;
 
     public JDBC() {

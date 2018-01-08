@@ -3,6 +3,7 @@ package test;
 import com.mvc.cn.entity.Company;
 import com.mvc.cn.entity.JDBC;
 import com.mvc.cn.entity.User;
+import com.mvc.cn.entity.User1;
 import com.mvc.cn.util.PropertiesReadAndWrite;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,24 +25,31 @@ public class TestUser {
     }
 
     @Test
-    public void testConstructorAndSetter(){
-        System.out.println("-----constructor-----");
-        User user=ac.getBean("user",User.class);
-        System.out.println("---user---"+user);
+    public void testMap(){
+        Map<String,String> map=ac.getBean("testMap", Map.class);
+        for(Map.Entry entry:map.entrySet()){
+            System.out.println(entry.getKey()+"-----"+entry.getValue());
+        }
     }
 
     @Test
-    public void testAutowired(){
-        System.out.println("----------begin---------------");
-        User user=ac.getBean("user_byType",User.class);
-        User user1=ac.getBean("user_byType",User.class);
-        System.out.println("--------:"+(user==user1));
+    public void testUser(){
+        User user1=ac.getBean("user",User.class);
+        User user2=ac.getBean("user",User.class);
+        System.out.println("user1==2:"+(user1==user2));
+        ac.close();
     }
 
     @Test
-    public void testRef(){
+    public void testCompany(){
         Company company=ac.getBean("company",Company.class);
-        System.out.println(company);
+        System.out.println("company:"+company);
+    }
+
+    @Test
+    public void testUser1(){
+        User1 user1=ac.getBean("user1",User1.class);
+        System.out.println(user1);
     }
 
     @Test
@@ -52,16 +60,8 @@ public class TestUser {
     }
 
     @Test
-    public void jdbc(){
-        JDBC jdbc=ac.getBean("jdbc", JDBC.class);
+    public void testJdbc(){
+        JDBC jdbc=ac.getBean("jdbc",JDBC.class);
         System.out.println(jdbc);
-    }
-
-    @Test
-    public void testMap(){
-        Map<String,String> map=ac.getBean("testMap", Map.class);
-        for(Map.Entry entry:map.entrySet()){
-            System.out.println(entry.getKey()+"-----"+entry.getValue());
-        }
     }
 }

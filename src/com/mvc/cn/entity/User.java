@@ -1,11 +1,16 @@
 package com.mvc.cn.entity;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 /**
  * Created by liKun on 2018/1/8 0008.
  */
 @Component
+@Scope("singleton")
 public class User {
     private String name;
     private int age;
@@ -26,10 +31,12 @@ public class User {
         this.weight = weight;
     }
 
+    @PostConstruct
     public void init_method(){
         System.out.println("初始化--------");
     }
 
+    @PreDestroy
     public void destroy_method(){
         System.out.println("销毁--------");
     }
