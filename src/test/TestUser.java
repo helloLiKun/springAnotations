@@ -9,8 +9,6 @@ import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Map;
 
 /**
