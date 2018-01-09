@@ -2,14 +2,14 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-    <context:component-scan base-package="com.mvc.cn"/>
-    <util:map id="testMap">
-        <entry key="name" value="zhangsan"></entry>
-        <entry key="age" value="25"></entry>
-    </util:map>
+       xmlns:mvc="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
 
-    <util:properties id="prop" location="classpath:resource/jdbc.properties"></util:properties>
+    <context:component-scan base-package="com.mvc.cn"/>
+
+    <mvc:annotation-driven/>
+
+    <util:properties id="jdbc" location="classpath:resource/jdbc.properties"></util:properties>
 
     <!--shiro安全管理配置-->
         <!-- dataSource -->
@@ -39,7 +39,7 @@
             <property name="permissionsLookupEnabled" value="true"></property>
             <property name="dataSource" ref="dataSource"></property>
             <property name="authenticationQuery"
-                      value="SELECT password FROM sec_user WHERE user_name = ?"></property>
+                      value="SELECT password FROM SYS_USER WHERE name = ?"></property>
             <property name="userRolesQuery"
                       value="SELECT role_name from sec_user_role left join sec_role using(role_id) left join sec_user using(user_id) WHERE user_name = ?"></property>
             <property name="permissionsQuery"
