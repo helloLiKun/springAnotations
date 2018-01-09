@@ -9,6 +9,7 @@
     <mvc:default-servlet-handler/>
     <!-- 开启注解 -->
     <mvc:annotation-driven/>
+
     <!--ViewResolver 视图解析器-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix">
