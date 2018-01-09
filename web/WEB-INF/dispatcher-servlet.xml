@@ -20,6 +20,14 @@
         <property name="suffix">
             <value>.jsp</value>
         </property>
+    </bean>
 
+    <!--处理系统异常方法二：配置SimpleMappingExceptionResolver -->
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="java.lang.Exception">error</prop>
+            </props>
+        </property>
     </bean>
 </beans>
