@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <context:component-scan base-package="com.mvc.cn"/>
+
+    <bean id="helloController" class="com.mvc.cn.controller.HelloController"></bean>
+
+    <!--SimpleUrlHandlerMapping內部HashMap维护Mapping-->
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="/hello">helloController</prop>
+            </props>
+        </property>
+    </bean>
+
     <!-- 静态资源(js、image等)的访问 -->
     <mvc:default-servlet-handler/>
     <!-- 开启注解 -->
     <mvc:annotation-driven/>
-
     <!--ViewResolver 视图解析器-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix">
@@ -20,6 +32,7 @@
         <property name="suffix">
             <value>.jsp</value>
         </property>
+
     </bean>
 
     <!--处理系统异常方法二：配置SimpleMappingExceptionResolver -->
@@ -30,4 +43,7 @@
             </props>
         </property>
     </bean>
+
 </beans>
+
+

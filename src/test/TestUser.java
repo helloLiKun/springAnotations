@@ -1,67 +1,51 @@
 package test;
 
-import com.mvc.cn.entity.Company;
-import com.mvc.cn.entity.JDBC;
-import com.mvc.cn.entity.User;
-import com.mvc.cn.entity.User1;
-import com.mvc.cn.util.PropertiesReadAndWrite;
+import com.mvc.cn.dao.SysUserDao;
+import com.mvc.cn.dao.jdbcTemplate.JdbcDaoSupportSysUserDao;
+import com.mvc.cn.dao.jdbcTemplate.JdbcTemplateSysUserDao;
+import com.mvc.cn.entity.SysUser;
+import com.mvc.cn.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.util.Map;
+import java.util.List;
 
 /**
  * Created by liKun on 2018/1/3 0003.
  */
 public class TestUser {
-    AbstractApplicationContext ac;
+    JdbcTemplateSysUserDao sysUserDao;
+
+    JdbcDaoSupportSysUserDao jdbcDaoSupportSysUserDao;
+
     @Before
-    public void initSpring(){
-        String cfg="resource/applicationContext.xml";
-        ac =new ClassPathXmlApplicationContext(cfg);
-        System.out.println("----------reload----------");
+    public void initFile(){
+        ApplicationContext ctx =
+                new ClassPathXmlApplicationContext("resource/applicationContext.xml");
+        sysUserDao=ctx.getBean("jdbcTemplateSysUserDao",JdbcTemplateSysUserDao.class);
     }
 
     @Test
-    public void testMap(){
-        Map<String,String> map=ac.getBean("testMap", Map.class);
-        for(Map.Entry entry:map.entrySet()){
-            System.out.println(entry.getKey()+"-----"+entry.getValue());
-        }
+    public void findAll(){
+//        List<SysUser> list=sysUserDao.findAll();
+        List<SysUser> list=jdbcDaoSupportSysUserDao.findAll();
+        System.out.println(list.size()+"-----------");
     }
 
     @Test
-    public void testUser(){
-        User user1=ac.getBean("user",User.class);
-        User user2=ac.getBean("user",User.class);
-        System.out.println("user1==2:"+(user1==user2));
-        ac.close();
+    public void addUser(){
+        SysUser user=new SysUser();
+        user.setIdNum("333");
+        user.setName("zhangsan");
+        user.setPwd("123");
+        user.setId("1");
+        user.setPhoneNum("123");
+//        userService.addUser(user);
     }
 
-    @Test
-    public void testCompany(){
-        Company company=ac.getBean("company",Company.class);
-        System.out.println("company:"+company);
-    }
 
-    @Test
-    public void testUser1(){
-        User1 user1=ac.getBean("user1",User1.class);
-        System.out.println(user1);
-    }
-
-    @Test
-    public void testProperties(){
-        PropertiesReadAndWrite propertiesReadAndWrite=(PropertiesReadAndWrite) ac.getBean("propertiesReadAndWrite");
-        propertiesReadAndWrite.readProperties();
-        propertiesReadAndWrite.writeProperties();
-    }
-
-    @Test
-    public void testJdbc(){
-        JDBC jdbc=ac.getBean("jdbc",JDBC.class);
-        System.out.println(jdbc);
-    }
 }
