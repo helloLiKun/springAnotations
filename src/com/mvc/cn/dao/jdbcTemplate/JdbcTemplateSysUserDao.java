@@ -27,7 +27,7 @@ public class JdbcTemplateSysUserDao implements SysUserDao {
     }
     @Override
     public SysUser findById(String id) {
-        String sql = "select * from SYS_USER where IDENTITY =?";
+        String sql = "select * from SYS_USER where id_num =?";
         return jdbcTemplate.queryForObject(
                 sql, new Object[]{id}, new EmpRowMapper());
     }
