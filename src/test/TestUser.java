@@ -27,12 +27,13 @@ public class TestUser {
         ApplicationContext ctx =
                 new ClassPathXmlApplicationContext("resource/applicationContext.xml");
         sysUserDao=ctx.getBean("jdbcTemplateSysUserDao",JdbcTemplateSysUserDao.class);
+        jdbcDaoSupportSysUserDao=ctx.getBean("jdbcDaoSupportSysUserDao",JdbcDaoSupportSysUserDao.class);
     }
 
     @Test
     public void findAll(){
-//        List<SysUser> list=sysUserDao.findAll();
-        List<SysUser> list=jdbcDaoSupportSysUserDao.findAll();
+        List<SysUser> list=sysUserDao.findAll();
+//        List<SysUser> list=jdbcDaoSupportSysUserDao.findAll();
         System.out.println(list.size()+"-----------");
     }
 

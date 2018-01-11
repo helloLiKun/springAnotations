@@ -3,6 +3,7 @@ package com.mvc.cn.dao.jdbcTemplate;
 import com.mvc.cn.dao.SysUserDao;
 import com.mvc.cn.entity.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
@@ -20,12 +21,28 @@ import java.util.List;
 @Repository
 public class JdbcDaoSupportSysUserDao  extends JdbcDaoSupport implements SysUserDao{
 
-    JdbcTemplate jdbcTemplate=this.getJdbcTemplate();
+    /**此处必须加入dataSource或jdbcTemplate要么报错如下
+     * Invocation of init method failed; nested exception is java.lang.IllegalArgumentException: 'dataSource' or 'jdbcTemplate' is required
+     * 如不加jdbcTemplate。要用dataSource
+     * name只能重新加入dataSource，为什么我用了setDataSource1为DataSource赋值
+     * 因在JdbcDaoSupport类中为final关键字修饰，不可重写
+     * @param
+     */
+//    @Autowired
+//    public void setDataSource1(@Qualifier("dataSource") DataSource dataSource){
+//        setDataSource(dataSource);
+//    }
+
+    @Autowired
+    public void setJdbcTemplate1(JdbcTemplate jdbcTemplate){
+        setJdbcTemplate(jdbcTemplate);
+    }
+
 
     @Override
     public List<SysUser> findAll() {
         String sql = "select * from SYS_USER";
-        return jdbcTemplate.query(sql,new JdbcDaoSupportSysUserDao.EmpRowMapper());
+        return getJdbcTemplate().query(sql,new JdbcDaoSupportSysUserDao.EmpRowMapper());
     }
     @Override
     public SysUser findById(String id) {
